@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -5,15 +6,21 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 export const useAuth = () => {
-  const { setUser, logout: clearAuth } = useAuthStore();
+  const { setUser, logout: clearAuth, hasHydrated } = useAuthStore();
   const router = useRouter();
 
   const getMe = useQuery({
     queryKey: ['me'],
     queryFn: () => api.get('/auth/me'),
     retry: false,
-    enabled: !!useAuthStore.getState().isAuthenticated,
+    enabled: hasHydrated,
   });
+
+  useEffect(() => {
+    if (getMe.data?.data?.user) {
+      setUser(getMe.data.data.user);
+    }
+  }, [getMe.data, setUser]);
 
   const loginMutation = useMutation({
     mutationFn: (data: any) => api.post('/auth/login', data),
@@ -81,5 +88,6 @@ export const useAuth = () => {
     isUpdating: updateProfileMutation.isPending,
     deleteAccount: deleteAccountMutation.mutate,
     isDeleting: deleteAccountMutation.isPending,
+    isFetching: getMe.isFetching,
   };
 };

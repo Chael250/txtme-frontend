@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuthStore } from '@/store/useAuthStore';
+import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Sidebar } from './Sidebar';
@@ -9,14 +10,26 @@ import { Search, Bell, Settings, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, hasHydrated } = useAuthStore();
+  const { isFetching } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (hasHydrated && !isFetching && !isAuthenticated) {
       router.push('/login');
     }
-  }, [isAuthenticated, router]);
+  }, [hasHydrated, isFetching, isAuthenticated, router]);
+
+  if (!hasHydrated || (isFetching && !isAuthenticated)) {
+     return (
+       <div className="h-screen w-screen flex items-center justify-center bg-slate-50">
+          <div className="flex flex-col items-center gap-4">
+             <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+             <p className="text-slate-400 font-bold animate-pulse uppercase tracking-widest text-xs">Verifying Session...</p>
+          </div>
+       </div>
+     );
+  }
 
   if (!isAuthenticated) return null;
 
