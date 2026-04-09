@@ -101,7 +101,11 @@ export default function AISearchPage() {
                        <div className="flex items-center justify-between px-2 md:px-0">
                           <div>
                              <h3 className="text-2xl font-black tracking-tight">{contact.firstname} {contact.lastname}</h3>
-                             <p className="text-slate-400 font-bold text-sm uppercase">Added {new Date(contact.createdAt).toLocaleDateString()}</p>
+                             <div className="flex items-center gap-2">
+                                <p className="text-slate-400 font-bold text-sm uppercase">Added {new Date(contact.createdAt).toLocaleDateString()}</p>
+                                <span className="text-slate-200">|</span>
+                                <p className="text-primary font-bold text-sm uppercase tracking-wider">{contact.company || 'Individual'}</p>
+                             </div>
                           </div>
                           <Badge className="bg-primary-light text-primary py-1 px-4">Match found ✨</Badge>
                        </div>
