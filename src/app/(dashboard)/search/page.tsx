@@ -15,12 +15,14 @@ export default function AISearchPage() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Contact[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async (forcedQuery?: string) => {
     const q = forcedQuery || query;
     if (!q.trim()) return;
 
     setIsLoading(true);
+    setHasSearched(true);
     try {
       const res: any = await api.post('/contacts/ai-search', { query: q }).catch(() => 
          api.get(`/contacts/search?q=${q}`)
@@ -67,17 +69,35 @@ export default function AISearchPage() {
         </div>
 
         {!isLoading && results.length === 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-             {['Contacts from Rwanda', 'People tagged as "Friends"', 'Who is John McCormick?'].map((suggestion: string) => (
-               <button 
-                 key={suggestion}
-                 onClick={() => { setQuery(suggestion); handleSearch(suggestion); }}
-                 className="p-4 bg-white/50 border border-slate-100 rounded-2xl text-left hover:bg-white hover:shadow-md transition-all group flex items-center justify-between"
-               >
-                 <span className="text-sm font-semibold text-slate-600 group-hover:text-primary">{suggestion}</span>
-                 <MessageSquare className="w-4 h-4 text-slate-300 group-hover:text-primary" />
-               </button>
-             ))}
+          <div className="space-y-6 max-w-2xl mx-auto">
+            {hasSearched ? (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center p-12 bg-white rounded-[2rem] shadow-sm border border-slate-100"
+              >
+                <div className="w-16 h-16 bg-slate-50 text-slate-300 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">No contacts found</h3>
+                <p className="text-slate-500 font-medium">
+                  We couldn't find any contacts matching your query. <br/>Try adjusting your search or using different keywords.
+                </p>
+              </motion.div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {['Contacts from Rwanda', 'People tagged as "Friends"', 'Who is John McCormick?'].map((suggestion: string) => (
+                  <button 
+                    key={suggestion}
+                    onClick={() => { setQuery(suggestion); handleSearch(suggestion); }}
+                    className="p-4 bg-white/50 border border-slate-100 rounded-2xl text-left hover:bg-white hover:shadow-md transition-all group flex items-center justify-between"
+                  >
+                    <span className="text-sm font-semibold text-slate-600 group-hover:text-primary">{suggestion}</span>
+                    <MessageSquare className="w-4 h-4 text-slate-300 group-hover:text-primary" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
