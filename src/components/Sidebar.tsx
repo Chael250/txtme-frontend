@@ -20,6 +20,7 @@ const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
   { icon: Users, label: 'Contacts', href: '/contacts' },
   { icon: Search, label: 'AI Search', href: '/search' },
+  { icon: Settings, label: 'Profile', href: '/profile' },
 ];
 
 export function Sidebar() {

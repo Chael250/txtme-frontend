@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Sidebar } from './Sidebar';
+import Link from 'next/link';
 import { Search, Bell, Settings, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -43,17 +44,17 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <button className="p-3 bg-white rounded-2xl shadow-sm hover:bg-slate-50 text-slate-400 hover:text-primary transition-all">
               <Bell className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
-              <div className="w-10 h-10 bg-primary-light rounded-xl flex items-center justify-center text-primary font-bold">
+            <Link href="/profile" className="flex items-center gap-3 pl-4 border-l border-slate-200 group/avatar">
+              <div className="w-10 h-10 bg-primary-light rounded-xl flex items-center justify-center text-primary font-bold group-hover/avatar:bg-primary group-hover/avatar:text-white transition-colors">
                 {user?.firstname?.charAt(0)}
               </div>
               <div className="hidden lg:block text-left">
-                <p className="text-sm font-bold text-slate-900 leading-none mb-1">
+                <p className="text-sm font-bold text-slate-900 leading-none mb-1 group-hover/avatar:text-primary transition-colors">
                   {user?.firstname} {user?.lastname}
                 </p>
                 <p className="text-xs font-semibold text-slate-400">Admin Account</p>
               </div>
-            </div>
+            </Link>
           </div>
         </header>
 
