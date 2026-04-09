@@ -14,7 +14,7 @@ export default function DashboardPage() {
 
   const stats = [
     { label: 'Total Contacts', value: contacts.length, icon: Users, color: 'bg-primary' },
-    { label: 'Favorites', value: contacts.filter((c: Contact) => c.favorite).length, icon: Star, color: 'bg-amber-400' },
+    { label: 'Favorites', value: contacts.filter((c: Contact) => c.isFavorite).length, icon: Star, color: 'bg-amber-400' },
     { label: 'Recently Added', value: contacts.slice(0, 5).length, icon: Clock, color: 'bg-emerald-400' },
   ];
 
@@ -117,7 +117,7 @@ export default function DashboardPage() {
                           </div>
                         </td>
                         <td className="px-6 py-5">
-                          {contact.favorite ? (
+                          {contact.isFavorite ? (
                             <Badge className="bg-amber-50 text-amber-600 border border-amber-100">
                               <Star className="w-3 h-3 mr-1 fill-current" /> Favorite
                             </Badge>

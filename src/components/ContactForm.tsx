@@ -22,7 +22,7 @@ export const ContactForm = ({ initialData, onSuccess }: ContactFormProps) => {
     phone: initialData?.phone || '',
     address: initialData?.address || '',
     company: initialData?.company || '',
-    favorite: initialData?.favorite || false,
+    isFavorite: initialData?.isFavorite || false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,14 +108,14 @@ export const ContactForm = ({ initialData, onSuccess }: ContactFormProps) => {
       <div className="flex items-center gap-2 p-4 bg-slate-50 rounded-2xl">
         <input 
           type="checkbox" 
-          id="favorite" 
-          name="favorite"
-          checked={formData.favorite}
+          id="isFavorite" 
+          name="isFavorite"
+          checked={formData.isFavorite}
           onChange={handleChange}
           className="w-5 h-5 rounded-lg border-slate-300 text-primary focus:ring-primary/20"
         />
-        <label htmlFor="favorite" className="text-sm font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
-          <Star className={`w-4 h-4 ${formData.favorite ? 'fill-amber-400 text-amber-400' : 'text-slate-400'}`} />
+        <label htmlFor="isFavorite" className="text-sm font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
+          <Star className={`w-4 h-4 ${formData.isFavorite ? 'fill-amber-400 text-amber-400' : 'text-slate-400'}`} />
           Mark as favorite
         </label>
       </div>

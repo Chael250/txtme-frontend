@@ -13,7 +13,7 @@ export interface Contact {
   avatar?: string;
   tags: { id: string; name: string }[];
   notes: { id: string; content: string }[];
-  favorite: boolean;
+  isFavorite: boolean;
   createdAt: string;
 }
 

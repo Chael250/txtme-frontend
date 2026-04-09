@@ -42,7 +42,7 @@ export default function ContactsPage() {
   };
 
   const handleToggleFavorite = (contact: Contact) => {
-    updateContact({ id: contact.id, data: { favorite: !contact.favorite } });
+    updateContact({ id: contact.id, data: { isFavorite: !contact.isFavorite } });
   };
 
   const handleEdit = (contact: Contact) => {
@@ -95,7 +95,7 @@ export default function ContactsPage() {
                 transition={{ duration: 0.2, delay: i * 0.05 }}
               >
                 <Card className="p-6 border-none shadow-sm hover:shadow-xl transition-all group relative overflow-hidden h-full flex flex-col">
-                  <div className={`absolute top-0 right-0 w-32 h-32 ${contact.favorite ? 'bg-amber-400/5' : 'bg-primary/5'} blur-3xl -z-10 rounded-full transition-transform group-hover:scale-150`} />
+                  <div className={`absolute top-0 right-0 w-32 h-32 ${contact.isFavorite ? 'bg-amber-400/5' : 'bg-primary/5'} blur-3xl -z-10 rounded-full transition-transform group-hover:scale-150`} />
                   
                   <div className="flex items-start justify-between mb-6">
                     <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center text-2xl font-black text-slate-600 group-hover:bg-primary group-hover:text-white transition-colors duration-500">
@@ -104,9 +104,9 @@ export default function ContactsPage() {
                     <div className="flex gap-1">
                       <button 
                          onClick={() => handleToggleFavorite(contact)}
-                         className={`p-2 rounded-xl transition-all ${contact.favorite ? 'text-amber-400' : 'text-slate-300 hover:text-amber-400 hover:bg-amber-50'}`}
+                         className={`p-2 rounded-xl transition-all ${contact.isFavorite ? 'text-amber-400' : 'text-slate-300 hover:text-amber-400 hover:bg-amber-50'}`}
                       >
-                        <Star className={`w-5 h-5 ${contact.favorite ? 'fill-current' : ''}`} />
+                        <Star className={`w-5 h-5 ${contact.isFavorite ? 'fill-current' : ''}`} />
                       </button>
                       <button 
                         onClick={() => handleDelete(contact.id)}
